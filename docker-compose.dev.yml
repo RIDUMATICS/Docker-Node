@@ -1,0 +1,22 @@
+version: "3.9"
+services:
+  nginx:
+    ports:
+      - "8000:80"
+  node-app:
+    build:
+      context: .
+      args:
+        NODE_ENV: development
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - MONGO_USER=root
+      - MONGO_PASSWORD=mySecretPassword
+      - PORT=3000
+    depends_on:
+      - mongo
+      - redis
+    command: npm run dev
